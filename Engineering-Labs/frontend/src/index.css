@@ -1,0 +1,304 @@
+@import "tailwindcss";
+
+/* =========================================================
+   8-BIT RETRO PIXEL ART DESIGN SYSTEM
+   Inspired by classic Japanese isometric pixel websites
+   ========================================================= */
+
+:root {
+  --pixel-bg-main: #f5b025;
+  --pixel-bg-dither: #e09815;
+  --pixel-border-dark: #2a1502;
+  --pixel-border-gold: #ff9d00;
+  --pixel-border-light: #ffe599;
+  --pixel-window-bg: #fffbf0;
+  --pixel-accent-red: #e63946;
+  --pixel-accent-teal: #1a936f;
+  --pixel-accent-blue: #2a6f97;
+  --pixel-accent-pink: #ff6584;
+}
+
+* {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Silkscreen', 'Courier New', monospace;
+  color: #2b1802;
+  background-color: var(--pixel-bg-main);
+  /* Retro Pixel Tiled Dither / Weave Pattern from the reference image */
+  background-image: 
+    radial-gradient(#e09815 15%, transparent 16%),
+    radial-gradient(#ffd571 15%, transparent 16%),
+    linear-gradient(45deg, rgba(200, 130, 10, 0.25) 25%, transparent 25%, transparent 75%, rgba(200, 130, 10, 0.25) 75%),
+    linear-gradient(45deg, rgba(200, 130, 10, 0.25) 25%, transparent 25%, transparent 75%, rgba(200, 130, 10, 0.25) 75%);
+  background-size: 16px 16px, 16px 16px, 16px 16px, 16px 16px;
+  background-position: 0 0, 8px 8px, 0 0, 8px 8px;
+  -webkit-font-smoothing: none;
+  font-smooth: never;
+}
+
+/* Typography Helpers */
+h1, h2, h3, .font-pixel-title {
+  font-family: 'Press Start 2P', monospace;
+  letter-spacing: -0.5px;
+}
+
+h1 {
+  font-size: 1.15rem;
+  line-height: 1.4;
+}
+
+h2 {
+  font-size: 0.95rem;
+  line-height: 1.35;
+}
+
+h3 {
+  font-size: 0.85rem;
+  line-height: 1.3;
+}
+
+.font-pixel-body {
+  font-family: 'Silkscreen', monospace;
+}
+
+.font-pixel-terminal {
+  font-family: 'VT323', monospace;
+  font-size: 1.15rem;
+  letter-spacing: 0.5px;
+}
+
+/* Force 0px border-radius across the entire application for authentic 8-bit styling */
+.rounded, .rounded-sm, .rounded-md, .rounded-lg, .rounded-xl, .rounded-2xl, .rounded-3xl, .rounded-full {
+  border-radius: 0px !important;
+}
+
+/* Global Container Box Override */
+.bg-white, .bg-gray-50, .bg-gray-100 {
+  background-color: #fffdf5 !important;
+}
+
+/* Pixel Window Component */
+.pixel-box {
+  background: var(--pixel-window-bg);
+  border: 3px solid var(--pixel-border-dark);
+  box-shadow: 
+    inset 2px 2px 0px #ffffff,
+    inset -2px -2px 0px #d8ba82,
+    4px 4px 0px var(--pixel-border-dark);
+  position: relative;
+}
+
+.pixel-box-gold {
+  background: #fffdf5;
+  border: 3px solid #994d00;
+  box-shadow: 
+    inset 2px 2px 0px #fff7d6,
+    inset -2px -2px 0px #e69900,
+    4px 4px 0px #4d2600;
+}
+
+/* Window Header Bar */
+.pixel-header-bar {
+  background: linear-gradient(180deg, #ffb833 0%, #ff8c00 100%);
+  border-bottom: 2px solid var(--pixel-border-dark);
+  padding: 6px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  color: #2b1400;
+  text-shadow: 1px 1px 0px #ffeaa7;
+}
+
+.pixel-header-buttons {
+  display: flex;
+  gap: 4px;
+}
+
+button.pixel-mini-btn, .pixel-mini-btn {
+  width: 15px !important;
+  height: 15px !important;
+  padding: 0 !important;
+  background: #ffffff !important;
+  border: 1px solid #000000 !important;
+  font-size: 8px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: 1 !important;
+  cursor: pointer;
+  box-shadow: 1px 1px 0px #000000 !important;
+  font-family: monospace !important;
+  font-weight: bold !important;
+  text-transform: none !important;
+  color: #000000 !important;
+}
+
+button.pixel-mini-btn:hover, .pixel-mini-btn:hover {
+  filter: none !important;
+  background: #ff7675 !important;
+  color: #ffffff !important;
+}
+
+button.pixel-mini-btn.btn-min:hover {
+  background: #ffeaa7 !important;
+  color: #000000 !important;
+}
+
+button.pixel-mini-btn.btn-max:hover {
+  background: #74b9ff !important;
+  color: #000000 !important;
+}
+
+/* Chunky 8-Bit Pixel Buttons */
+button, .pixel-btn, a.pixel-btn {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 9px;
+  padding: 8px 14px;
+  border: 2px solid #000000 !important;
+  box-shadow: 3px 3px 0px #000000 !important;
+  cursor: pointer;
+  transition: transform 0.05s ease, box-shadow 0.05s ease;
+  text-transform: uppercase;
+  border-radius: 0px !important;
+}
+
+button:hover, .pixel-btn:hover {
+  filter: brightness(1.08);
+}
+
+button:active, .pixel-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px #000000 !important;
+}
+
+.pixel-btn-primary {
+  background: #ff9900 !important;
+  color: #000 !important;
+}
+
+.pixel-btn-success {
+  background: #2ecc71 !important;
+  color: #000 !important;
+}
+
+.pixel-btn-danger {
+  background: #e74c3c !important;
+  color: #fff !important;
+}
+
+.pixel-btn-pink {
+  background: #ff5983 !important;
+  color: #fff !important;
+}
+
+.pixel-btn-dark {
+  background: #2d3436 !important;
+  color: #fff !important;
+}
+
+/* Pixel Nav Tab */
+.pixel-tab {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 9px;
+  padding: 7px 11px;
+  background: #fce8b2;
+  color: #552700;
+  border: 2px solid #552700;
+  box-shadow: 2px 2px 0px #301400;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.05s ease;
+}
+
+.pixel-tab:hover, .pixel-tab.active {
+  background: #ff9900;
+  color: #000;
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0px #301400;
+}
+
+/* Pixel Form Inputs */
+input, select, textarea, .pixel-input {
+  font-family: 'Silkscreen', monospace;
+  font-size: 13px;
+  background: #ffffff !important;
+  border: 2px solid #2d1800 !important;
+  box-shadow: inset 2px 2px 0px #cfb584 !important;
+  padding: 8px 12px;
+  color: #2b1802;
+  outline: none;
+  border-radius: 0px !important;
+}
+
+input:focus, select:focus, textarea:focus, .pixel-input:focus {
+  border-color: #ff8800 !important;
+  background: #fffdf5 !important;
+  box-shadow: inset 2px 2px 0px #ffa733, 0 0 0 2px #ffc04d !important;
+}
+
+/* Retro CRT / News Terminal */
+.pixel-terminal {
+  background: #fdf5d3;
+  border: 2px solid #8c5300;
+  color: #4a2800;
+  font-family: 'VT323', monospace;
+  font-size: 17px;
+  line-height: 1.35;
+  padding: 10px 14px;
+  box-shadow: inset 2px 2px 0px #d9b870;
+}
+
+/* Global Card Styling */
+article, section.bg-white, .pixel-card {
+  border: 3px solid #2d1800 !important;
+  box-shadow: 4px 4px 0px #2d1800 !important;
+  border-radius: 0px !important;
+  background: #fffdf5 !important;
+}
+
+/* Pixel Avatar Frame */
+.pixel-frame {
+  border: 3px solid #2d1800;
+  padding: 4px;
+  background: #fff;
+  box-shadow: 2px 2px 0px #8c5300;
+}
+
+/* Retro Marquee Text */
+.pixel-marquee {
+  background: #ffaa00;
+  color: #000;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 9px;
+  padding: 6px 0;
+  border-top: 2px solid #000;
+  border-bottom: 2px solid #000;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* Custom Scrollbar for Authentic 90s/2000s look */
+::-webkit-scrollbar {
+  width: 14px;
+  background: #ffeaa7;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ff9900;
+  border: 2px solid #000;
+  box-shadow: inset 1px 1px 0px #fff;
+}
+
+::-webkit-scrollbar-button {
+  background: #ffa801;
+  border: 1px solid #000;
+  height: 14px;
+}
