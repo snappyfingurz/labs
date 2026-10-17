@@ -2,8 +2,9 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import api from "../services/api";
 import { useEffect, useState, useContext } from "react";
 import CartContext from "../context/CartContext";
+import BambooPanda from "./BambooPanda";
 
-function Navbar() {
+function Navbar({ showBambooPanda }) {
   const nav = useNavigate();
   const location = useLocation();
   const { cartItems, getCart } = useContext(CartContext);
@@ -11,6 +12,8 @@ function Navbar() {
 
   const [isBannerCollapsed, setIsBannerCollapsed] = useState(false);
   const [isBannerMaximized, setIsBannerMaximized] = useState(false);
+
+  const isHomePage = showBambooPanda ?? (location.pathname === "/");
 
   const cartCount = (cartItems || []).reduce(
     (total, item) => total + (item.quantity || 1),
@@ -55,7 +58,10 @@ function Navbar() {
   ];
 
   return (
-    <header className="w-full max-w-6xl mx-auto pt-4 px-3">
+    <header className="w-full max-w-6xl mx-auto pt-4 px-3 relative">
+      {/* Bamboo Mascot Panda climbing from top-right corner */}
+      {isHomePage && <BambooPanda />}
+
       {/* Top Retro Pixel Header Banner */}
       <div className="pixel-box mb-3 overflow-hidden">
         <div className="pixel-header-bar">

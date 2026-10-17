@@ -234,7 +234,7 @@ function Home() {
 
   return (
     <div className="min-h-screen">
-      <Navbar />
+      <Navbar showBambooPanda={true} />
 
       <main className="max-w-6xl mx-auto px-3 pb-24">
         {/* All Windows Closed / Minimized Empty State */}
