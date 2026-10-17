@@ -307,15 +307,15 @@ article, section.bg-white, .pixel-card {
    CLIMBING PANDA RETRO ANIMATIONS
    ========================================================= */
 @keyframes climbDownWiggle {
-  0% { transform: rotate(-3deg) translateY(0px); }
-  50% { transform: rotate(3deg) translateY(4px); }
-  100% { transform: rotate(-3deg) translateY(0px); }
+  0% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(4px) scale(0.98, 1.02); }
+  100% { transform: translateY(0px) scale(1); }
 }
 
 @keyframes climbUpWiggle {
-  0% { transform: rotate(3deg) translateY(0px); }
-  50% { transform: rotate(-3deg) translateY(-4px); }
-  100% { transform: rotate(3deg) translateY(0px); }
+  0% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-4px) scale(0.98, 1.02); }
+  100% { transform: translateY(0px) scale(1); }
 }
 
 @keyframes particleFloat {
