@@ -27,7 +27,7 @@ function Login() {
     setLoading(true);
 
     try {
-      const response = await api.post("/customers/login", formData);
+      const response = await api.post("customers/login", formData);
       console.log(response);
       navigate("/home");
     } catch (err) {
