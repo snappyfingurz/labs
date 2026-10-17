@@ -79,7 +79,7 @@ function Home() {
   useEffect(() => {
     let cancelled = false;
 
-    api.post("customers/me")
+    api.post("/customers/me")
       .then((response) => {
         if (!cancelled && response.data) {
           setData(response.data);
