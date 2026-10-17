@@ -10,8 +10,16 @@ import wishlistRouter from './routes/wishlist.routes.js';
 import cartRouter from './routes/cart.routes.js';
 import orderRouter from './routes/order.routes.js';
 
-dns.setServers(['8.8.8.8', '8.8.4.4']);
+dotenv.config();
 
+// Custom DNS servers break Vercel / AWS Lambda networking; only set in local dev if needed
+if (!process.env.VERCEL) {
+  try {
+    dns.setServers(['8.8.8.8', '8.8.4.4']);
+  } catch (e) {
+    console.warn("Failed to set custom DNS servers:", e.message);
+  }
+}
 
 const app = express();
 
@@ -32,19 +40,39 @@ app.use(cors({
   credentials: true,
 }));
 app.use(cookieParser());
-
-
-dotenv.config();
-
-mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => {
-    console.log("MongoDB connected");
-  })
-  .catch((error) => {
-    console.log("MongoDB connection failed:", error.message);
-  });
 app.use(express.json());
+
+// Serverless-friendly cached MongoDB connection
+let cachedConnection = null;
+
+const connectDB = async () => {
+  if (cachedConnection && mongoose.connection.readyState === 1) {
+    return cachedConnection;
+  }
+
+  if (!process.env.MONGODB_URI) {
+    throw new Error("MONGODB_URI is not defined in environment variables on Vercel.");
+  }
+
+  cachedConnection = await mongoose.connect(process.env.MONGODB_URI, {
+    serverSelectionTimeoutMS: 5000,
+  });
+  console.log("MongoDB connected");
+  return cachedConnection;
+};
+
+// Ensure database is connected before handling any API request
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (error) {
+    console.error("MongoDB connection error:", error.message);
+    return res.status(500).json({
+      error: `Database connection error: ${error.message}. Please check MONGODB_URI in Vercel environment variables and ensure MongoDB Atlas allows access from anywhere (0.0.0.0/0).`
+    });
+  }
+});
 
 // Mount routes for both root and /api prefixes to support direct & Vercel rewritten paths
 const registerRoutes = (prefix = "") => {
