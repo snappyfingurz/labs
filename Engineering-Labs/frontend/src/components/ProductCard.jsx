@@ -7,13 +7,33 @@ function ProductCard({ product }) {
   const { addCart } = useContext(CartContext);
   const [saving, setSaving] = useState(false);
   const [addingToCart, setAddingToCart] = useState(false);
+  const [cartAdded, setCartAdded] = useState(false);
+  const [cartError, setCartError] = useState("");
   const [wishlistAdded, setWishlistAdded] = useState(false);
   const [wishlistError, setWishlistError] = useState("");
 
   const handleAddCart = async () => {
+    if (product.stock === 0) return;
     try {
       setAddingToCart(true);
-      await addCart(product._id);
+      setCartError("");
+      const result = await addCart(product._id);
+      if (result && result.success === false) {
+        if (result.status === 401) {
+          setCartError("Please log in first!");
+        } else {
+          setCartError(result.error || "Failed to add to cart.");
+        }
+      } else {
+        setCartAdded(true);
+        setTimeout(() => setCartAdded(false), 2500);
+      }
+    } catch (err) {
+      if (err.response?.status === 401) {
+        setCartError("Please log in first!");
+      } else {
+        setCartError(err.response?.data?.error || "Failed to add to cart.");
+      }
     } finally {
       setAddingToCart(false);
     }
@@ -89,10 +109,22 @@ function ProductCard({ product }) {
           <button
             onClick={handleAddCart}
             disabled={addingToCart || product.stock === 0}
-            className="pixel-btn pixel-btn-success text-[8px] py-1.5"
+            className={`pixel-btn ${cartAdded ? "pixel-btn-pink" : "pixel-btn-success"} text-[8px] py-1.5`}
           >
-            {addingToCart ? "ADDING..." : "ADD TO CART 🛒"}
+            {addingToCart
+              ? "ADDING TO CART... ⏳"
+              : cartAdded
+              ? "✓ ADDED TO CART! 🛒"
+              : product.stock === 0
+              ? "OUT OF STOCK"
+              : "ADD TO CART 🛒"}
           </button>
+
+          {cartError && (
+            <p className="font-pixel-body text-[10px] text-red-600 text-center mt-0.5">
+              {cartError}
+            </p>
+          )}
 
           <button
             onClick={handleAddWishlist}

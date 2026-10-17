@@ -266,13 +266,19 @@ function ProductDetails() {
                   type="button"
                   onClick={handleAddToCart}
                   disabled={product.stock === 0 || addingToCart}
-                  className="w-full rounded-lg bg-blue-600 px-6 py-3.5 font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-gray-400 shadow cursor-pointer text-center"
+                  className={`w-full rounded-lg px-6 py-3.5 font-semibold text-white transition shadow cursor-pointer text-center ${
+                    cartSuccess
+                      ? "bg-green-600 hover:bg-green-700"
+                      : "bg-blue-600 hover:bg-blue-700"
+                  } disabled:cursor-not-allowed disabled:bg-gray-400`}
                 >
                   {addingToCart
-                    ? "Adding to Cart..."
+                    ? "Adding to Cart... ⏳"
+                    : cartSuccess
+                    ? "✓ Added to Cart! 🛒"
                     : product.stock === 0
                     ? "Out of Stock"
-                    : "Add to Cart"}
+                    : "Add to Cart 🛒"}
                 </button>
 
                 <button
