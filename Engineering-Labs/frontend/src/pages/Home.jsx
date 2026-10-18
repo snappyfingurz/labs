@@ -280,26 +280,8 @@ function Home() {
             >
               {/* Box 1: Customer Profile */}
               {windows.account.isOpen && !windows.account.isMinimized && (
-                <>
-                  {windows.account.isPoppedOut && (
-                    <div className="border-2 border-dashed border-[#b8860b] bg-[#fffbf0]/75 p-3 text-center font-pixel-body text-[10px] text-[#5c2e00] flex items-center justify-between shadow-[2px_2px_0px_rgba(0,0,0,0.06)]">
-                      <div className="flex items-center gap-1.5">
-                        <span>👤</span>
-                        <span className="font-bold">Customer Account is floating</span>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => togglePopout("account")}
-                        className="pixel-btn text-[7px] py-1 px-2 bg-[#ffd571] hover:bg-[#ffc542]"
-                        title="Dock back to grid"
-                      >
-                        DOCK ❐
-                      </button>
-                    </div>
-                  )}
-
-                  <div
-                    className={`pixel-box ${
+                <div
+                  className={`pixel-box ${
                       windows.account.isPoppedOut
                         ? "shadow-[8px_8px_0px_#000000] border-3 border-[#2a1502]"
                         : ""
@@ -408,31 +390,12 @@ function Home() {
                       </div>
                     </div>
                   </div>
-                </>
               )}
 
               {/* Box 2: Store Policies & Guarantee */}
               {windows.guarantee.isOpen && !windows.guarantee.isMinimized && (
-                <>
-                  {windows.guarantee.isPoppedOut && (
-                    <div className="border-2 border-dashed border-[#b8860b] bg-[#fffbf0]/75 p-3 text-center font-pixel-body text-[10px] text-[#5c2e00] flex items-center justify-between shadow-[2px_2px_0px_rgba(0,0,0,0.06)]">
-                      <div className="flex items-center gap-1.5">
-                        <span>📜</span>
-                        <span className="font-bold">Store Guarantee is floating</span>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => togglePopout("guarantee")}
-                        className="pixel-btn text-[7px] py-1 px-2 bg-[#ffd571] hover:bg-[#ffc542]"
-                        title="Dock back to grid"
-                      >
-                        DOCK ❐
-                      </button>
-                    </div>
-                  )}
-
-                  <div
-                    className={`pixel-box ${
+                <div
+                  className={`pixel-box ${
                       windows.guarantee.isPoppedOut
                         ? "shadow-[8px_8px_0px_#000000] border-3 border-[#2a1502]"
                         : ""
@@ -524,7 +487,6 @@ function Home() {
                       </p>
                     </div>
                   </div>
-                </>
               )}
 
             </div>
@@ -540,26 +502,8 @@ function Home() {
               
               {/* Box 1: Featured Merch / Quick Portal */}
               {windows.categories.isOpen && !windows.categories.isMinimized && (
-                <>
-                  {windows.categories.isPoppedOut && (
-                    <div className="border-2 border-dashed border-[#b8860b] bg-[#fffbf0]/75 p-3 text-center font-pixel-body text-[10px] text-[#5c2e00] flex items-center justify-between shadow-[2px_2px_0px_rgba(0,0,0,0.06)]">
-                      <div className="flex items-center gap-1.5">
-                        <span>🛍</span>
-                        <span className="font-bold">Product Categories is floating</span>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => togglePopout("categories")}
-                        className="pixel-btn text-[7px] py-1 px-2 bg-[#ffd571] hover:bg-[#ffc542]"
-                        title="Dock back to grid"
-                      >
-                        DOCK ❐
-                      </button>
-                    </div>
-                  )}
-
-                  <div
-                    className={`pixel-box ${
+                <div
+                  className={`pixel-box ${
                       windows.categories.isPoppedOut
                         ? "shadow-[8px_8px_0px_#000000] border-3 border-[#2a1502]"
                         : ""
@@ -681,31 +625,12 @@ function Home() {
                       </div>
                     </div>
                   </div>
-                </>
               )}
 
               {/* Box 2: Mascot Companion Box */}
               {windows.assistant.isOpen && !windows.assistant.isMinimized && (
-                <>
-                  {windows.assistant.isPoppedOut && (
-                    <div className="border-2 border-dashed border-[#b8860b] bg-[#fffbf0]/75 p-3 text-center font-pixel-body text-[10px] text-[#5c2e00] flex items-center justify-between shadow-[2px_2px_0px_rgba(0,0,0,0.06)]">
-                      <div className="flex items-center gap-1.5">
-                        <span>🐼</span>
-                        <span className="font-bold">Shopping Assistant is floating</span>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => togglePopout("assistant")}
-                        className="pixel-btn text-[7px] py-1 px-2 bg-[#ffd571] hover:bg-[#ffc542]"
-                        title="Dock back to grid"
-                      >
-                        DOCK ❐
-                      </button>
-                    </div>
-                  )}
-
-                  <div
-                    className={`pixel-box ${
+                <div
+                  className={`pixel-box ${
                       windows.assistant.isPoppedOut
                         ? "shadow-[8px_8px_0px_#000000] border-3 border-[#2a1502]"
                         : ""
@@ -812,7 +737,6 @@ function Home() {
                       </div>
                     </div>
                   </div>
-                </>
               )}
 
             </div>
@@ -821,39 +745,92 @@ function Home() {
         </div>
       </main>
 
-      {/* Comic Speech Bubble Alert Notification */}
+      {/* Comic Action Starburst Alert Notification (Custom SVG, 100% Transparent Background, No Bouncing) */}
       {showComicBubble && (
-        <div className="fixed bottom-14 sm:bottom-16 left-2 sm:left-4 z-50 select-none filter drop-shadow-[6px_6px_0px_#000000] animate-bounce">
+        <div className="fixed bottom-14 sm:bottom-16 left-2 sm:left-6 z-50 select-none animate-bubble-pop">
           <div
-            className="relative cursor-pointer group w-[310px] sm:w-[350px] transition-transform hover:scale-105 active:scale-95"
+            className="relative cursor-pointer group w-[320px] sm:w-[370px] transition-transform hover:scale-[1.02] active:scale-[0.98]"
             onClick={() => {
               setStartMenuOpen(true);
               setShowComicBubble(false);
             }}
             title="Click to open Start Menu"
           >
-            <img
-              src="/assets/comic_bubble.png"
-              alt="Comic Notification"
-              className="w-full h-auto object-contain pointer-events-none"
-            />
-            {/* Centered text in Comic Bubble */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center px-8 py-6 text-center pointer-events-none">
-              <span className="font-pixel-title text-[9px] sm:text-[10px] text-[#2a1400] leading-snug uppercase font-black tracking-tight drop-shadow-[1px_1px_0px_#ffeaa7]">
-                closed windows can be accessed from the start menu!!
+            {/* 100% Vector Comic Starburst Rendered in Code (Fully Transparent Outside) */}
+            <svg
+              viewBox="0 0 410 230"
+              className="w-full h-auto overflow-visible filter drop-shadow-[6px_6px_0px_#000000]"
+            >
+              <defs>
+                <pattern
+                  id="comicHalftone"
+                  x="0"
+                  y="0"
+                  width="10"
+                  height="10"
+                  patternUnits="userSpaceOnUse"
+                >
+                  <circle cx="5" cy="5" r="2.4" fill="#e63946" />
+                </pattern>
+                <mask id="burstMask">
+                  <polygon
+                    points="356,115 374,131 344,149 355,168 322,169 319,190 290,190 275,208 247,199 215,215 193,195 149,205 139,176 64,163 103,120 50,110 95,80 125,85 145,45 180,80 205,30 235,75 265,40 285,70 315,60 320,85 355,90"
+                    fill="#ffffff"
+                  />
+                </mask>
+              </defs>
+
+              {/* Solid Black Offset Shadow */}
+              <polygon
+                points="360,119 378,135 348,153 359,172 326,173 323,194 294,194 279,212 251,203 219,219 197,199 153,209 143,180 68,167 107,124 54,114 99,84 129,89 149,49 184,84 209,34 239,79 269,44 289,74 319,64 324,89 359,94"
+                fill="#000000"
+              />
+
+              {/* Main Comic Starburst */}
+              <polygon
+                points="356,115 374,131 344,149 355,168 322,169 319,190 290,190 275,208 247,199 215,215 193,195 149,205 139,176 64,163 103,120 50,110 95,80 125,85 145,45 180,80 205,30 235,75 265,40 285,70 315,60 320,85 355,90"
+                fill="#ffdd00"
+                stroke="#000000"
+                strokeWidth="4.5"
+                strokeLinejoin="round"
+              />
+
+              {/* Ben-Day Halftone Dots Around Outer Spikes */}
+              <g mask="url(#burstMask)">
+                <ellipse cx="85" cy="115" rx="55" ry="60" fill="url(#comicHalftone)" opacity="0.9" />
+                <ellipse cx="330" cy="120" rx="50" ry="60" fill="url(#comicHalftone)" opacity="0.9" />
+                <ellipse cx="215" cy="188" rx="60" ry="25" fill="url(#comicHalftone)" opacity="0.8" />
+                {/* Solid Yellow Core to keep text crisp and clear */}
+                <ellipse cx="212" cy="116" rx="90" ry="46" fill="#ffdd00" />
+              </g>
+
+              {/* Inner Inking Accent */}
+              <polygon
+                points="356,115 374,131 344,149 355,168 322,169 319,190 290,190 275,208 247,199 215,215 193,195 149,205 139,176 64,163 103,120 50,110 95,80 125,85 145,45 180,80 205,30 235,75 265,40 285,70 315,60 320,85 355,90"
+                fill="none"
+                stroke="#000000"
+                strokeWidth="1.5"
+              />
+            </svg>
+
+            {/* Centered Text inside the solid yellow core */}
+            <div className="absolute inset-0 flex flex-col items-center justify-center px-10 py-5 text-center pointer-events-none">
+              <span className="font-pixel-title text-[9px] sm:text-[10px] text-[#2b1802] leading-snug uppercase font-black tracking-tight drop-shadow-[1px_1px_0px_#ffffff] max-w-[200px]">
+                CLOSED WINDOWS CAN BE ACCESSED FROM THE START MENU!!
               </span>
-              <span className="text-[7px] font-pixel-body text-red-700 font-bold mt-1 bg-yellow-300/80 px-1 border border-black/40">
-                [OPEN START MENU ⛩]
+              <span className="text-[8px] font-pixel-body text-[#8b0000] font-bold mt-1.5 bg-[#ffffff]/90 px-2 py-0.5 border border-[#000000] shadow-[2px_2px_0px_#000000]">
+                OPEN START MENU ⛩
               </span>
             </div>
-            {/* Close button for comic bubble */}
+
+            {/* Comic Dismiss ✕ Button */}
             <button
               type="button"
               onClick={(e) => {
                 e.stopPropagation();
                 setShowComicBubble(false);
               }}
-              className="absolute top-2 right-4 pixel-mini-btn bg-white hover:bg-red-400 text-[8px] font-bold z-10 shadow-[1px_1px_0_#000]"
+              className="absolute top-1 right-7 bg-[#000000] text-[#ffffff] hover:bg-[#e63946] border border-[#ffffff] w-5 h-5 flex items-center justify-center text-[9px] font-bold z-10 shadow-[2px_2px_0px_rgba(0,0,0,0.6)] cursor-pointer"
               title="Dismiss"
             >
               ✕
