@@ -45,6 +45,50 @@ function Checkout() {
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [confirmedOrder, setConfirmedOrder] = useState(null);
 
+  // Coupon state & validation
+  const [couponInput, setCouponInput] = useState("");
+  const [appliedCoupon, setAppliedCoupon] = useState(null);
+  const [couponError, setCouponError] = useState("");
+  const [couponLoading, setCouponLoading] = useState(false);
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("shopkart_coupon");
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed.code === "PANDA5") {
+          setCouponInput("PANDA5");
+        }
+      }
+    } catch (_) {}
+  }, []);
+
+  const handleApplyCoupon = async (codeToApply) => {
+    const code = (codeToApply || couponInput).trim().toUpperCase();
+    if (!code) return;
+    setCouponError("");
+    setCouponLoading(true);
+
+    try {
+      const res = await api.post("/orders/validate-coupon", { couponCode: code });
+      if (res.data?.valid) {
+        setAppliedCoupon({
+          code: res.data.code,
+          discountPercent: res.data.discountPercent,
+          maxDiscount: res.data.maxDiscount,
+          message: res.data.message,
+        });
+      }
+    } catch (err) {
+      setAppliedCoupon(null);
+      setCouponError(
+        err.response?.data?.error || "Failed to validate coupon"
+      );
+    } finally {
+      setCouponLoading(false);
+    }
+  };
+
   useEffect(() => {
     if (getCart) {
       getCart();
@@ -58,6 +102,14 @@ function Checkout() {
         Number(item?.quantity ?? 1),
     0
   );
+
+  const discountAmount = appliedCoupon
+    ? Math.min(
+        appliedCoupon.maxDiscount || 500,
+        Math.round(totalAmount * (appliedCoupon.discountPercent / 100))
+      )
+    : 0;
+  const payableAmount = Math.max(0, totalAmount - discountAmount);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -149,6 +201,7 @@ function Checkout() {
     }
 
     const payload = {
+      couponCode: appliedCoupon?.code,
       shippingAddress: {
         fullName: formData.fullName.trim(),
         phone: cleanPhone,
@@ -560,9 +613,65 @@ function Checkout() {
                     )}
                   </div>
 
-                  <div className="border-t border-gray-200 mt-6 pt-4 flex justify-between items-center text-lg font-bold text-gray-900">
+                  {/* Coupon Code Section */}
+                  <div className="border-t border-gray-200 mt-4 pt-3">
+                    <label className="block text-xs font-bold text-gray-700 mb-1">
+                      HAVE A COUPON CODE?
+                    </label>
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        value={couponInput}
+                        onChange={(e) => {
+                          setCouponInput(e.target.value.toUpperCase());
+                          setCouponError("");
+                        }}
+                        placeholder="ENTER CODE (e.g. PANDA5)"
+                        className="w-full px-3 py-1.5 border border-gray-300 text-xs uppercase font-mono tracking-wider focus:outline-none focus:ring-1 focus:ring-gray-800"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => handleApplyCoupon()}
+                        disabled={couponLoading || !couponInput.trim()}
+                        className="px-3 py-1.5 bg-[#2b1802] text-white text-xs font-bold hover:bg-black disabled:opacity-50 cursor-pointer"
+                      >
+                        {couponLoading ? "CHECKING..." : "APPLY"}
+                      </button>
+                    </div>
+
+                    {couponError && (
+                      <p className="text-xs text-red-600 mt-1 font-bold">
+                        ✕ {couponError}
+                      </p>
+                    )}
+
+                    {appliedCoupon && (
+                      <div className="flex justify-between items-center text-xs text-green-700 font-bold bg-green-50 border border-green-300 px-2.5 py-1.5 mt-2">
+                        <span>✓ {appliedCoupon.code} applied (First-time user 5% OFF)</span>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setAppliedCoupon(null);
+                            setCouponInput("");
+                          }}
+                          className="text-red-500 hover:text-red-700 ml-2"
+                        >
+                          ✕
+                        </button>
+                      </div>
+                    )}
+                  </div>
+
+                  {discountAmount > 0 && (
+                    <div className="flex justify-between items-center text-sm font-semibold text-green-700 mt-2">
+                      <span>First-Time User Discount (5%)</span>
+                      <span>-{formatPrice(discountAmount)}</span>
+                    </div>
+                  )}
+
+                  <div className="border-t border-gray-200 mt-4 pt-4 flex justify-between items-center text-lg font-bold text-gray-900">
                     <span>Total</span>
-                    <span>{formatPrice(totalAmount)}</span>
+                    <span>{formatPrice(payableAmount)}</span>
                   </div>
 
                   {/* Place Order Button */}

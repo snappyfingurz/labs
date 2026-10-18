@@ -355,3 +355,31 @@ article, section.bg-white, .pixel-card {
 .animate-bubble-pop {
   animation: bubblePop 0.15s forwards ease-out;
 }
+
+/* =========================================================
+   PIXEL EASTER EGG RETRO CRACKING ANIMATION
+   ========================================================= */
+@keyframes eggWobble {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(-5deg) scale(1.05); }
+  75% { transform: rotate(5deg) scale(1.05); }
+}
+
+@keyframes eggCrackShake {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  15% { transform: translate(-4px, 1px) rotate(-8deg); }
+  30% { transform: translate(4px, -1px) rotate(8deg); }
+  45% { transform: translate(-5px, -1px) rotate(-10deg); }
+  60% { transform: translate(5px, 1px) rotate(10deg); }
+  75% { transform: translate(-3px, 0px) rotate(-5deg); }
+  90% { transform: translate(3px, 0px) rotate(5deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+.animate-egg-wobble {
+  animation: eggWobble 1.8s infinite ease-in-out;
+}
+
+.animate-egg-crack {
+  animation: eggCrackShake 0.55s ease-in-out;
+}

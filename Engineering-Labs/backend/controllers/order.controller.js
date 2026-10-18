@@ -101,6 +101,23 @@ export const createPaymentOrder = async (req, res) => {
       });
     }
 
+    // First-time user coupon validation for PANDA5
+    let discount = 0;
+    const couponCode = req.body.couponCode?.trim().toUpperCase();
+    if (couponCode === "PANDA5") {
+      const paidOrdersCount = await Order.countDocuments({
+        user: userId,
+        paymentStatus: "PAID",
+      });
+      if (paidOrdersCount > 0) {
+        return res.status(400).json({
+          error: "Coupon PANDA5 is valid for first-time orders only",
+        });
+      }
+      discount = Math.min(500, Math.round(totalAmount * 0.05));
+      totalAmount = Math.max(0, totalAmount - discount);
+    }
+
     // Create ShopKart pending order
     const shopKartOrder = new Order({
       user: user._id,
@@ -329,6 +346,43 @@ export const updateOrderStatus = async (req, res) => {
     });
   } catch (err) {
     console.error("Error updating order status:", err);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+export const validateCoupon = async (req, res) => {
+  try {
+    const userId = req.user?._id || req.user?.id;
+    if (!userId) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    const couponCode = req.body.couponCode?.trim().toUpperCase();
+    if (couponCode !== "PANDA5") {
+      return res.status(400).json({ error: "Invalid coupon code" });
+    }
+
+    const paidOrdersCount = await Order.countDocuments({
+      user: userId,
+      paymentStatus: "PAID",
+    });
+
+    if (paidOrdersCount > 0) {
+      return res.status(400).json({
+        valid: false,
+        error: "Coupon PANDA5 is valid for first-time orders only",
+      });
+    }
+
+    return res.status(200).json({
+      valid: true,
+      code: "PANDA5",
+      discountPercent: 5,
+      maxDiscount: 500,
+      message: "First-time user discount applied! (5% OFF up to ₹500)",
+    });
+  } catch (err) {
+    console.error("Error validating coupon:", err);
     return res.status(500).json({ error: "Internal server error" });
   }
 };

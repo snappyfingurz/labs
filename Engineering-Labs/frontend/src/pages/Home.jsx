@@ -747,9 +747,9 @@ function Home() {
 
       {/* Comic Action Starburst Alert Notification (Custom SVG, 100% Transparent Background, No Bouncing) */}
       {showComicBubble && (
-        <div className="fixed bottom-14 sm:bottom-16 left-2 sm:left-6 z-50 select-none animate-bubble-pop">
+        <div className="fixed bottom-10 sm:bottom-11 left-1 sm:left-2 z-50 select-none animate-bubble-pop">
           <div
-            className="relative cursor-pointer group w-[320px] sm:w-[370px] transition-transform hover:scale-[1.02] active:scale-[0.98]"
+            className="relative cursor-pointer group w-[272px] sm:w-[304px] transition-transform hover:scale-[1.02] active:scale-[0.98]"
             onClick={() => {
               setStartMenuOpen(true);
               setShowComicBubble(false);
@@ -759,7 +759,7 @@ function Home() {
             {/* 100% Vector Comic Starburst Rendered in Code (Fully Transparent Outside) */}
             <svg
               viewBox="0 0 410 230"
-              className="w-full h-auto overflow-visible filter drop-shadow-[6px_6px_0px_#000000]"
+              className="w-full h-auto overflow-visible filter drop-shadow-[5px_5px_0px_#000000]"
             >
               <defs>
                 <pattern
@@ -813,24 +813,24 @@ function Home() {
               />
             </svg>
 
-            {/* Centered Text inside the solid yellow core */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center px-10 py-5 text-center pointer-events-none">
-              <span className="font-pixel-title text-[9px] sm:text-[10px] text-[#2b1802] leading-snug uppercase font-black tracking-tight drop-shadow-[1px_1px_0px_#ffffff] max-w-[200px]">
+            {/* Centered Text inside the solid yellow core, shifted slightly more right and down */}
+            <div className="absolute top-[56%] left-[54%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center text-center w-[78%] pointer-events-none">
+              <span className="font-pixel-title text-[8px] sm:text-[9px] text-[#2b1802] leading-tight uppercase font-black tracking-tight drop-shadow-[1px_1px_0px_#ffffff] max-w-[190px]">
                 CLOSED WINDOWS CAN BE ACCESSED FROM THE START MENU!!
               </span>
-              <span className="text-[8px] font-pixel-body text-[#8b0000] font-bold mt-1.5 bg-[#ffffff]/90 px-2 py-0.5 border border-[#000000] shadow-[2px_2px_0px_#000000]">
+              <span className="text-[7px] sm:text-[8px] font-pixel-body text-[#8b0000] font-bold mt-1 bg-[#ffffff]/90 px-1.5 py-0.5 border border-[#000000] shadow-[1.5px_1.5px_0px_#000000]">
                 OPEN START MENU ⛩
               </span>
             </div>
 
-            {/* Comic Dismiss ✕ Button */}
+            {/* Comic Dismiss ✕ Button - Positioned slightly more towards the right */}
             <button
               type="button"
               onClick={(e) => {
                 e.stopPropagation();
                 setShowComicBubble(false);
               }}
-              className="absolute top-1 right-7 bg-[#000000] text-[#ffffff] hover:bg-[#e63946] border border-[#ffffff] w-5 h-5 flex items-center justify-center text-[9px] font-bold z-10 shadow-[2px_2px_0px_rgba(0,0,0,0.6)] cursor-pointer"
+              className="absolute top-2.5 right-4 sm:top-3 sm:right-5 bg-[#000000] text-[#ffffff] hover:bg-[#e63946] border border-[#ffffff] w-4.5 h-4.5 flex items-center justify-center text-[8px] font-bold z-10 shadow-[2px_2px_0px_rgba(0,0,0,0.6)] cursor-pointer"
               title="Dismiss"
             >
               ✕

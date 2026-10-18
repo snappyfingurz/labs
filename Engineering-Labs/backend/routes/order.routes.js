@@ -6,10 +6,12 @@ import {
   getOrders,
   getOrderById,
   updateOrderStatus,
+  validateCoupon,
 } from "../controllers/order.controller.js";
 
 const orderRouter = express.Router();
 
+orderRouter.post("/validate-coupon", authMiddleware, validateCoupon);
 orderRouter.post("/create-payment-order", authMiddleware, createPaymentOrder);
 orderRouter.post("/verify-payment", authMiddleware, verifyPayment);
 orderRouter.post("/", authMiddleware, createPaymentOrder);
